@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+npn-debug.log
+quiz.sqlite
+.env
