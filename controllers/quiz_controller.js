@@ -2,7 +2,22 @@ var models = require('../models/models.js');
 
 // GET /quizes
 exports.index = function(req, res) {
-  models.Quiz.findAll().then(function(quizes) {
+  var isearch = req.query.search;
+  if (isearch!==undefined){
+    console.log("Parametro de busqueda: " + isearch);
+    console.log("Parametro de busqueda traducido: " + isearch.replace(/\s/g, '%') );
+
+    
+  } else {
+    console.log("Parametro de busquedai: " + isearch);
+    console.log("Parametro de busqueda: undefined" );
+    isearch="";
+    console.log("Parametro de busquedai modificado: " + isearch);
+  }
+
+    isearch="%"+isearch+"%";
+  //models.Quiz.findAll().then(function(quizes) {
+  models.Quiz.findAll({where: ["pregunta like ?", isearch]}).then(function(quizes) {
     res.render('quizes/index.ejs', { quizes: quizes});
   })
 };
